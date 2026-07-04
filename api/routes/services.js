@@ -20,10 +20,16 @@ router.post("/tiktok", async (req, res) => {
   try {
     await connectDB();
 
-    const {
-      link,
-      quantity
-    } = req.body;
+  const body = req.body || {};
+
+const { link, quantity } = body;
+
+    if (!req.body) {
+  return res.status(400).json({
+    success: false,
+    message: "Request body is missing."
+  });
+}
 
     if (!link || !quantity) {
       return res.status(400).json({
