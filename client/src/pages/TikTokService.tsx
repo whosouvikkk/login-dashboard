@@ -160,17 +160,17 @@ export default function TikTokService() {
       <div className="grid md:grid-cols-3 gap-6">
 
         <ServiceCard
-          title="1K Views"
+          title="1,000 Views"
           credits={1}
           quantity={1000}
-          onClick={() => { setSelectedPackage({title:"1K Views",quantity:1000,credits:1}); setPopup(true); }}
+          onClick={() => { setSelectedPackage({title:"1,000 Views",quantity:1000,credits:1}); setPopup(true); }}
         />
 
         <ServiceCard
-          title="5K Views"
+          title="5,000 Views"
           credits={5}
           quantity={5000}
-          onClick={() => { setSelectedPackage({title:"5K Views",quantity:5000,credits:5}); setPopup(true); }}
+          onClick={() => { setSelectedPackage({title:"5,000 Views",quantity:5000,credits:5}); setPopup(true); }}
         />
 
         <div className="glass-panel p-7">
@@ -340,17 +340,17 @@ export default function TikTokService() {
         <div className="grid md:grid-cols-3 gap-6">
 
           <PricingCard
-            title="1K Views"
+            title="1,000 Views"
             credits="1 Credit"
           />
 
           <PricingCard
-            title="5K Views"
+            title="5,000 Views"
             credits="5 Credits"
           />
 
           <PricingCard
-            title="Custom"
+            title="Custom Amount"
             credits="1000 Views = 1 Credit"
           />
 
