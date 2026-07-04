@@ -1,51 +1,52 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
-
-import Landing from './pages/Landing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import NotFound from './pages/NotFound';
-
+import { AuthProvider } from './hooks/useAuth';
 import DashboardLayout from './layouts/DashboardLayout';
 import Dashboard from './pages/Dashboard';
-import Services from './pages/Services';
-import Profile from './pages/Profile';
+import { Toaster } from 'react-hot-toast';
 
-import AdminLayout from './layouts/AdminLayout';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminUsers from './pages/admin/AdminUsers';
-import AdminServices from './pages/admin/AdminServices';
+// Simple placeholders for Landing and Login components until you build the real ones
+const Landing = () => (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-background text-white p-10">
+    <h1 className="text-4xl font-bold mb-4">MoonWitch</h1>
+    <a href="/login" className="btn-primary mt-4">Go to Login</a>
+  </div>
+);
+
+const Login = () => (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-background text-white p-10">
+    <h1 className="text-3xl font-bold mb-4">Login Page</h1>
+    <a href="/dashboard" className="btn-primary mt-4">Go to Dashboard</a>
+  </div>
+);
 
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{
-          style: { background: '#121212', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }
-        }}/>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-
-          {/* User Protected Dashboard */}
+          
+          {/* Dashboard routes wrapped in the Layout */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="services" element={<Services />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="services" element={<div className="text-gray-400 p-8">Services page coming soon.</div>} />
+            <Route path="settings" element={<div className="text-gray-400 p-8">Settings page coming soon.</div>} />
           </Route>
-
-          {/* Admin Protected Portal */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="users" element={<AdminUsers />} />
-            <Route path="services" element={<AdminServices />} />
-          </Route>
-
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      
+      {/* Toast notifications configuration */}
+      <Toaster 
+        position="bottom-right" 
+        toastOptions={{ 
+          style: { 
+            background: '#0B0914', 
+            color: '#fff', 
+            border: '1px solid rgba(255,255,255,0.1)' 
+          }
+        }} 
+      />
     </AuthProvider>
   );
 }
