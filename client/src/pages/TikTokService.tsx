@@ -1,23 +1,30 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import api from "../services/api";
+import toast from "react-hot-toast";
 import {
   ArrowLeft,
   PlayCircle,
-  Zap,
   Coins,
-  ExternalLink,
+  Zap,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export default function TikTokService() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const [popup, setPopup] = useState(false);
+
   const [link, setLink] = useState("");
   const [amount, setAmount] = useState("");
 
-  const creditsRequired = useMemo(() => {
+  const credits = useMemo(() => {
     const qty = Number(amount);
 
     if (!qty || qty <= 0) return 0;
@@ -25,79 +32,119 @@ export default function TikTokService() {
     return Math.ceil(qty / 1000);
   }, [amount]);
 
-  const quickOrders = [
-    {
-      title: "1K TikTok Views",
-      amount: 1000,
-      credits: 1,
-    },
-    {
-      title: "5K TikTok Views",
-      amount: 5000,
-      credits: 5,
-    },
-  ];
+  const submit = async (qty: number, custom = false) => {
+    try {
+      if (custom) {
+        if (!link.trim()) {
+          toast.error("Enter TikTok Link");
+          return;
+        }
 
-  const submitQuickOrder = async (
-    quantity: number,
-    credits: number
-  ) => {
-    alert(
-      `Backend API will be connected here.\n\nQuantity : ${quantity}\nCredits : ${credits}`
-    );
+        if (!amount) {
+          toast.error("Enter amount");
+          return;
+        }
+
+        qty = Number(amount);
+      }
+
+      const requiredCredits = Math.ceil(qty / 1000);
+
+      if ((user?.credits ?? 0) < requiredCredits) {
+        toast.error("Insufficient Credits");
+        return;
+      }
+
+      setLoading(true);
+
+      await api.post("/services/tiktok", {
+        link,
+        quantity: qty,
+      });
+
+      setSuccess(true);
+
+      toast.success("Order placed successfully.");
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message ||
+        "Unable to place order."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const submitCustomOrder = async () => {
-    alert(
-      `Backend API\n\nLink : ${link}\nQuantity : ${amount}\nCredits : ${creditsRequired}`
+  if (success) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+
+        <div className="glass-panel p-10 text-center max-w-lg">
+
+          <CheckCircle2
+            size={90}
+            className="mx-auto text-green-500"
+          />
+
+          <h2 className="text-4xl font-black text-white mt-6">
+            Order Submitted
+          </h2>
+
+          <p className="text-gray-400 mt-3">
+            Redirecting to dashboard...
+          </p>
+
+        </div>
+
+      </div>
     );
-  };
+  }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-slide-up">
+    <div className="space-y-8 max-w-7xl mx-auto animate-slide-up">
 
       <button
         onClick={() => navigate("/dashboard")}
         className="flex items-center gap-2 text-gray-400 hover:text-white transition"
       >
         <ArrowLeft size={18} />
-        Back
+        Dashboard
       </button>
 
-      <div className="glass-panel p-8">
+      <div className="glass-panel p-8 flex justify-between items-center">
 
-        <div className="flex justify-between items-center">
+        <div>
 
-          <div>
+          <h1 className="text-4xl font-black text-white">
+            TikTok Views
+          </h1>
 
-            <h1 className="text-4xl font-black text-white">
-              TikTok Views Service
-            </h1>
+          <p className="text-gray-500 mt-2">
+            Purchase TikTok views using Moon Credits.
+          </p>
 
-            <p className="text-gray-500 mt-3">
-              Purchase TikTok views instantly using your
-              credits.
-            </p>
+        </div>
 
-          </div>
+        <div className="glass-panel px-6 py-5">
 
-          <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
+          <div className="flex items-center gap-3">
 
-            <div className="flex items-center gap-3">
+            <Coins className="text-primary"/>
 
-              <Coins className="text-primary" />
+            <div>
 
-              <div>
+              <p className="text-xs text-gray-400">
+                Available Credits
+              </p>
 
-                <p className="text-sm text-gray-400">
-                  Your Credits
-                </p>
-
-                <h2 className="text-3xl font-bold text-white">
-                  {user?.credits ?? 0}
-                </h2>
-
-              </div>
+              <h3 className="text-3xl font-bold text-white">
+                {user?.credits ?? 0}
+              </h3>
 
             </div>
 
@@ -109,78 +156,50 @@ export default function TikTokService() {
 
       <div className="grid md:grid-cols-3 gap-6">
 
-        {quickOrders.map((order) => (
-          <div
-            key={order.amount}
-            className="glass-panel p-7 border border-white/10 hover:border-primary/40 transition-all"
-          >
-            <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+        <ServiceCard
+          title="1K Views"
+          credits={1}
+          quantity={1000}
+          onClick={() => submit(1000)}
+        />
 
-              <PlayCircle
-                className="text-primary"
-                size={30}
-              />
+        <ServiceCard
+          title="5K Views"
+          credits={5}
+          quantity={5000}
+          onClick={() => submit(5000)}
+        />
 
-            </div>
+        <div className="glass-panel p-7">
 
-            <h2 className="text-2xl font-bold text-white">
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
 
-              {order.title}
-
-            </h2>
-
-            <p className="text-gray-500 mt-2">
-
-              Cost : {order.credits} Credit
-
-            </p>
-
-            <button
-              onClick={() =>
-                submitQuickOrder(
-                  order.amount,
-                  order.credits
-                )
-              }
-              className="btn-primary w-full mt-8"
-            >
-              Launch
-            </button>
-
-          </div>
-        ))}
-
-        <div className="glass-panel p-7 border border-white/10 hover:border-primary/40 transition-all">
-
-          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-
-            <Zap
-              className="text-primary"
-              size={30}
-            />
+            <Zap className="text-primary"/>
 
           </div>
 
-          <h2 className="text-2xl font-bold text-white">
-            Custom Views
+          <h2 className="text-2xl font-bold text-white mt-6">
+            Custom
           </h2>
 
           <p className="text-gray-500 mt-2">
-
             1000 Views = 1 Credit
-
           </p>
 
           <button
-            onClick={() => setOpen(true)}
+            onClick={() => setPopup(true)}
             className="btn-primary w-full mt-8"
           >
             Launch
           </button>
-      {open && (
+
+        </div>
+
+      </div>
+            {popup && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-6">
 
-          <div className="glass-panel w-full max-w-xl p-8 relative animate-slide-up">
+          <div className="glass-panel w-full max-w-xl p-8 animate-slide-up">
 
             <h2 className="text-3xl font-bold text-white mb-8">
               Custom TikTok Views
@@ -190,7 +209,7 @@ export default function TikTokService() {
 
               <div>
 
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm text-gray-400 block mb-2">
                   TikTok Link
                 </label>
 
@@ -205,14 +224,14 @@ export default function TikTokService() {
 
               <div>
 
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm text-gray-400 block mb-2">
                   Amount
                 </label>
 
                 <input
+                  type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  type="number"
                   className="input-field"
                   placeholder="1000"
                 />
@@ -224,52 +243,24 @@ export default function TikTokService() {
                 <div className="flex justify-between">
 
                   <span className="text-gray-400">
-
                     Credits Required
-
                   </span>
 
-                  <span className="text-primary text-xl font-bold">
-
-                    {creditsRequired}
-
+                  <span className="text-primary font-bold text-2xl">
+                    {credits}
                   </span>
 
                 </div>
 
-                <div className="mt-3 text-xs text-gray-500">
+                <div className="mt-3 text-sm">
 
-                  Every 1000 views costs 1 credit.
-
-                </div>
-
-              </div>
-
-              <div className="glass-panel p-5">
-
-                <div className="flex justify-between">
-
-                  <span className="text-gray-400">
-                    Your Credits
-                  </span>
-
-                  <span className="text-white font-bold">
-
-                    {user?.credits ?? 0}
-
-                  </span>
-
-                </div>
-
-                <div className="mt-3">
-
-                  {(user?.credits ?? 0) >= creditsRequired ? (
-                    <span className="text-green-400 text-sm">
-                      Enough credits available.
+                  {(user?.credits ?? 0) >= credits ? (
+                    <span className="text-green-400">
+                      You have enough credits.
                     </span>
                   ) : (
-                    <span className="text-red-400 text-sm">
-                      Insufficient credits.
+                    <span className="text-red-400">
+                      Not enough credits.
                     </span>
                   )}
 
@@ -279,20 +270,35 @@ export default function TikTokService() {
 
               <button
                 disabled={
+                  loading ||
                   !link ||
                   !amount ||
-                  creditsRequired <= 0 ||
-                  (user?.credits ?? 0) < creditsRequired
+                  credits <= 0 ||
+                  (user?.credits ?? 0) < credits
                 }
-                onClick={submitCustomOrder}
-                className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed"
+                onClick={() => submit(Number(amount), true)}
+                className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed flex justify-center items-center gap-2"
               >
-                Submit Order
+
+                {loading ? (
+                  <>
+                    <Loader2
+                      className="animate-spin"
+                      size={18}
+                    />
+
+                    Processing...
+
+                  </>
+                ) : (
+                  "Submit Order"
+                )}
+
               </button>
 
               <button
-                onClick={() => setOpen(false)}
-                className="w-full border border-white/10 rounded-xl py-3 text-gray-300 hover:bg-white/5 transition"
+                onClick={() => setPopup(false)}
+                className="w-full border border-white/10 rounded-xl py-3 hover:bg-white/5 text-gray-300 transition"
               >
                 Cancel
               </button>
@@ -306,61 +312,118 @@ export default function TikTokService() {
 
       <div className="glass-panel p-8">
 
-        <div className="flex items-center gap-3 mb-5">
+        <h2 className="text-2xl font-bold text-white mb-6">
+          Pricing
+        </h2>
 
-          <ExternalLink className="text-primary" />
+        <div className="grid md:grid-cols-3 gap-6">
 
-          <h3 className="text-xl font-semibold text-white">
-            Pricing
-          </h3>
+          <PricingCard
+            title="1K Views"
+            credits="1 Credit"
+          />
 
-        </div>
+          <PricingCard
+            title="5K Views"
+            credits="5 Credits"
+          />
 
-        <div className="grid md:grid-cols-3 gap-5">
-
-          <div className="border border-white/10 rounded-2xl p-5">
-
-            <h4 className="text-white font-semibold">
-              1,000 Views
-            </h4>
-
-            <p className="text-gray-500 mt-2">
-              1 Credit
-            </p>
-
-          </div>
-
-          <div className="border border-white/10 rounded-2xl p-5">
-
-            <h4 className="text-white font-semibold">
-              5,000 Views
-            </h4>
-
-            <p className="text-gray-500 mt-2">
-              5 Credits
-            </p>
-
-          </div>
-
-          <div className="border border-white/10 rounded-2xl p-5">
-
-            <h4 className="text-white font-semibold">
-              Custom
-            </h4>
-
-            <p className="text-gray-500 mt-2">
-              1000 Views = 1 Credit
-            </p>
-
-          </div>
+          <PricingCard
+            title="Custom"
+            credits="1000 Views = 1 Credit"
+          />
 
         </div>
 
       </div>
+          </div>
+  );
+}
+
+function ServiceCard({
+  title,
+  quantity,
+  credits,
+  onClick,
+}: {
+  title: string;
+  quantity: number;
+  credits: number;
+  onClick: () => void;
+}) {
+  return (
+    <div className="glass-panel p-7 border border-white/10 hover:border-primary/40 transition-all hover:-translate-y-1">
+
+      <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+
+        <PlayCircle
+          className="text-primary"
+          size={30}
+        />
+
+      </div>
+
+      <h2 className="text-2xl font-bold text-white">
+        {title}
+      </h2>
+
+      <div className="mt-5 space-y-2">
+
+        <div className="flex justify-between text-sm">
+
+          <span className="text-gray-400">
+            Quantity
+          </span>
+
+          <span className="text-white">
+            {quantity.toLocaleString()} Views
+          </span>
+
+        </div>
+
+        <div className="flex justify-between text-sm">
+
+          <span className="text-gray-400">
+            Cost
+          </span>
+
+          <span className="text-primary font-semibold">
+            {credits} Credit{credits > 1 ? "s" : ""}
+          </span>
+
+        </div>
+
+      </div>
+
+      <button
+        onClick={onClick}
+        className="btn-primary w-full mt-8"
+      >
+        Launch
+      </button>
 
     </div>
   );
 }
-        </div>
 
-      </div>
+function PricingCard({
+  title,
+  credits,
+}: {
+  title: string;
+  credits: string;
+}) {
+  return (
+    <div className="glass-panel p-6 border border-white/10">
+
+      <h3 className="text-xl font-bold text-white">
+        {title}
+      </h3>
+
+      <p className="text-gray-400 mt-3">
+        {credits}
+      </p>
+
+    </div>
+  );
+}
