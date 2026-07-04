@@ -16,6 +16,7 @@ router.use(protect);
 */
 
 router.post("/tiktok", async (req, res) => {
+  console.log("BODY:", req.body);
   try {
     await connectDB();
 
