@@ -12,6 +12,7 @@ import AdminServices from './pages/admin/AdminServices';
 import AdminLogin from './pages/AdminLogin';
 import TikTokService from './pages/TikTokService';
 import OlluluBot from "./pages/OlluluBot";
+import InstagramService from "./pages/InstagramService";
 
 function LandingPage() {
   const faqs = [
@@ -162,12 +163,18 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           
-         <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+
     <Route index element={<Dashboard />} />
 
     <Route
         path="ttservice"
         element={<TikTokService />}
+    />
+
+    <Route
+        path="instagram"
+        element={<InstagramService />}
     />
 
     <Route
@@ -224,6 +231,7 @@ export default function App() {
             </div>
         }
     />
+
 </Route>
 
           <Route path="/admin" element={<AdminLayout />}>
