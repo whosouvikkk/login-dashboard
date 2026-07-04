@@ -66,18 +66,18 @@ export default function DashboardLayout() {
         {/* Top Header */}
         <header className="glass-panel mb-6 p-4 px-6 flex justify-between items-center z-10 shrink-0">
           <h2 className="text-lg font-medium text-gray-200">
-            Welcome back, <span className="text-white font-semibold">{user.username}</span>
+            Welcome back, <span className="text-white font-semibold">{user?.username || 'User'}</span>
           </h2>
           
           <div className="flex items-center gap-4">
              <div className="flex items-center gap-2 bg-surface/50 border border-white/5 px-4 py-2 rounded-xl backdrop-blur-md">
                 <span className="text-gray-400 text-sm">Balance</span>
                 <div className="h-1 w-1 bg-primary rounded-full animate-pulse"></div>
-                <span className="text-primary font-bold">{user.credits}</span>
+                <span className="text-primary font-bold">{user?.credits ?? 0}</span>
              </div>
              
              <div className="h-10 w-10 bg-gradient-to-tr from-surface to-primary/20 rounded-xl flex items-center justify-center border border-white/10 text-white font-bold shadow-lg cursor-pointer hover:border-primary/50 transition-colors">
-               {user.username.charAt(0).toUpperCase()}
+               {user?.username?.charAt(0)?.toUpperCase() || 'U'}
              </div>
           </div>
         </header>
