@@ -1,5 +1,10 @@
 import { useAuth } from '../hooks/useAuth';
-import { Zap, Activity, Shield, ArrowRight } from 'lucide-react';
+import {
+  Zap,
+  Activity,
+  Search,
+  ArrowRight
+} from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
@@ -24,13 +29,13 @@ export default function Dashboard() {
       badge: 'SOON',
     },
     {
-      id: 3,
-      title: 'Telegram',
-      icon: Shield,
-      desc: 'Coming Soon',
-      route: '#',
-      badge: 'SOON',
-    },
+  id: 3,
+  title: "Osint Bot Lookup",
+  icon: Search,
+  desc: "Premium Lookup Service",
+  route: "ollulu",
+  badge: "LIVE",
+},
   ];
 
   return (
