@@ -197,12 +197,12 @@ export default function InstagramService() {
       <div className="grid md:grid-cols-3 gap-6">
 
         <ServiceCard
-          title="2.5K Views"
+          title="2,500 Views"
           credits={1}
           quantity={2500}
           onClick={() => {
             setSelectedPackage({
-              title: "2.5K Views",
+              title: "2,500 Views",
               quantity: 2500,
               credits: 1,
             });
@@ -434,7 +434,7 @@ export default function InstagramService() {
         <div className="grid md:grid-cols-3 gap-6">
 
           <PricingCard
-            title="2.5K Views"
+            title="2,500 Views"
             credits="1 Credit"
           />
 
