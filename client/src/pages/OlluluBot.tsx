@@ -409,26 +409,13 @@ export default function OlluluBot() {
 
                     ) : (
 
-                      {type === "number" ? (
-  <div className="space-y-2">
-    {String(value)
-      .split(",")
-      .map((line, index) => (
-        <div
-          key={index}
-          className="rounded-lg bg-white/5 px-4 py-3 border border-white/5"
-        >
-          {line.trim()}
-        </div>
-      ))}
-  </div>
-) : (
-  <p className="text-white text-lg font-medium break-all">
-    {String(value)}
-  </p>
-)}
+                      <p className="text-white text-lg font-medium break-all">
 
-                        )}
+                        {String(value)}
+
+                      </p>
+
+                    )}
 
                   </div>
 
