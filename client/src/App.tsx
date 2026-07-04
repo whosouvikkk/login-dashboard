@@ -15,7 +15,6 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden flex flex-col">
-      {/* Premium Navbar */}
       <nav className="glass-panel mx-6 mt-6 p-4 px-8 flex justify-between items-center z-50 shrink-0">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center">
@@ -33,16 +32,15 @@ function LandingPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link to="/login" className="text-sm text-gray-300 hover:text-white font-medium transition-colors">
-            Login
+          <Link to="/login" className="text-sm text-gray-300 hover:text-white font-medium transition-colors cursor-pointer">
+            Sign In
           </Link>
-          <Link to="/login?mode=signup" className="btn-primary text-sm">
+          <Link to="/login?mode=signup" className="btn-primary text-sm cursor-pointer">
             Get Started
           </Link>
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="flex-1 max-w-6xl mx-auto px-6 pt-24 pb-16 text-center relative z-10 flex flex-col items-center justify-center animate-slide-up">
         <div className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
         
@@ -59,20 +57,18 @@ function LandingPage() {
         </p>
         
         <div className="mt-10 flex flex-col sm:flex-row gap-4 z-20">
-          <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group">
+          <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer">
             Create Free Account <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link to="/login" className="bg-white/5 hover:bg-white/10 border border-white/5 text-white px-8 py-3.5 rounded-xl font-medium transition-all">
+          <Link to="/login" className="bg-white/5 hover:bg-white/10 border border-white/5 text-white px-8 py-3.5 rounded-xl font-medium transition-all cursor-pointer">
             Access Dashboard
           </Link>
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="max-w-6xl mx-auto px-6 py-20 w-full relative z-10 animate-fade-in">
         <h3 className="text-2xl font-bold text-white mb-12 text-center tracking-wide">Engineered for Performance</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Feature 1 */}
           <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <Shield size={22} />
@@ -82,7 +78,6 @@ function LandingPage() {
               Industrial grade JWT sessions paired with cryptographic password hashing keeps your service integrations fully isolated.
             </p>
           </div>
-          {/* Feature 2 */}
           <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <CreditCard size={22} />
@@ -92,7 +87,6 @@ function LandingPage() {
               Eliminate multiple platform subscriptions. Deposit balance once and scale compute consumption fluidly across tools.
             </p>
           </div>
-          {/* Feature 3 */}
           <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <Zap size={22} />
@@ -105,7 +99,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section id="how-it-works" className="max-w-5xl mx-auto px-6 py-20 w-full relative z-10">
         <h3 className="text-2xl font-bold text-white mb-16 text-center tracking-wide">Simple Pipeline Onboarding</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
@@ -127,7 +120,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
       <section id="faq" className="max-w-3xl mx-auto px-6 py-20 w-full relative z-10">
         <h3 className="text-2xl font-bold text-white mb-12 text-center tracking-wide flex items-center justify-center gap-2">
           <HelpCircle size={24} className="text-primary" /> Frequently Asked Questions
@@ -142,7 +134,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Premium Footer */}
       <footer className="border-t border-white/5 bg-surface/20 backdrop-blur-md p-8 px-12 mt-auto text-center md:flex md:justify-between md:items-center text-sm text-gray-500">
         <p>© 2026 MoonWitch. All rights operational.</p>
         <div className="flex gap-6 justify-center mt-4 md:mt-0">
@@ -165,8 +156,22 @@ export default function App() {
           
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="services" element={<div className="text-gray-400 p-8">Services page coming soon.</div>} />
-            <Route path="settings" element={<div className="text-gray-400 p-8">Settings page coming soon.</div>} />
+            <Route path="services" element={<div className="text-gray-400 p-8 glass-panel border border-white/5 mt-4">Services index coming soon.</div>} />
+            <Route path="settings" element={
+              <div className="p-8 max-w-2xl mt-4">
+                <h3 className="text-2xl font-bold text-white mb-6">Profile Settings</h3>
+                <div className="glass-panel p-6 border border-white/5 space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Account Role</label>
+                    <div className="text-white font-medium px-4 py-2 bg-surface/50 rounded-lg inline-block border border-white/5">Standard Operator</div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Notification Preferences</label>
+                    <p className="text-sm text-gray-500">Discord Webhooks configured globally.</p>
+                  </div>
+                </div>
+              </div>
+            } />
           </Route>
         </Routes>
       </BrowserRouter>
