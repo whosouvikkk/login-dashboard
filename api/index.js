@@ -8,8 +8,8 @@ const adminRoutes = require('./routes/admin');
 
 const app = express();
 
-const serviceRoutes = require('./routes/services');
-app.use('/api/services', serviceRoutes);
+//const serviceRoutes = require('./routes/services');
+//app.use('/api/services', serviceRoutes);
 
 app.use(helmet());
 app.use(cors());
