@@ -26,10 +26,11 @@
     @apply bg-surface/40 backdrop-blur-xl border border-white/5 rounded-2xl shadow-glass bg-glass-gradient relative overflow-hidden;
   }
   
-  .glass-panel::before {
-    content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 transition-opacity duration-500;
-  }
+ .glass-panel::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 transition-opacity duration-500;
+  pointer-events: none;
+}
   
   .glass-panel:hover::before {
     @apply opacity-100;
