@@ -53,7 +53,7 @@ function LandingPage() {
         <div className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
         
         <span className="text-xs font-semibold px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 tracking-wider uppercase mb-6">
-          Next-Gen Ecosystem Platform
+          MoonWitch Services
         </span>
         
         <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 tracking-tight leading-tight max-w-4xl">
@@ -66,10 +66,10 @@ function LandingPage() {
         
         <div className="mt-10 flex flex-col sm:flex-row gap-4 z-20">
           <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer">
-            Create Free Account <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            Create an Account <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link to="/login" className="bg-white/5 hover:bg-white/10 border border-white/5 text-white px-8 py-3.5 rounded-xl font-medium transition-all cursor-pointer">
-            Access Dashboard
+            Dashboard
           </Link>
         </div>
       </section>
@@ -147,7 +147,7 @@ function LandingPage() {
         <div className="flex gap-6 justify-center mt-4 md:mt-0">
           <a href="#" className="hover:text-gray-300 transition-colors">Privacy</a>
           <a href="#" className="hover:text-gray-300 transition-colors">Terms</a>
-          <a href="#" className="hover:text-gray-300 transition-colors">Support</a>
+          <a href="https://t.me/moonwitchadminbot" className="hover:text-gray-300 transition-colors">Support</a>
         </div>
       </footer>
     </div>
