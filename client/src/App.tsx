@@ -11,6 +11,7 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminServices from './pages/admin/AdminServices';
 import AdminLogin from './pages/AdminLogin';
 import TikTokService from './pages/TikTokService';
+import OlluluBot from "./pages/OlluluBot";
 
 function LandingPage() {
   const faqs = [
