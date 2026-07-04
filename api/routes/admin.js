@@ -5,7 +5,7 @@ const connectDB = require('../config/db');
 
 const router = express.Router();
 
-router.use(protect, admin);
+router.use(protect);
 
 /*
 |--------------------------------------------------------------------------
