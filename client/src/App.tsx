@@ -68,9 +68,13 @@ function LandingPage() {
 </div>
       <nav className="glass-panel relative z-50 mx-6 mt-6 p-4 px-8 flex justify-between items-center shrink-0">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center">
-            <Zap size={18} className="text-white" />
-          </div>
+          <div className="h-10 w-10 rounded-xl overflow-hidden shadow-glow">
+  <img
+    src="/hi.png"
+    alt="MoonWitch"
+    className="w-full h-full object-cover"
+  />
+</div>
           <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 tracking-wide">
             MoonWitch
           </span>
