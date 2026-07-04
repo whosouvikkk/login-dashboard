@@ -34,9 +34,13 @@ export default function DashboardLayout() {
       <aside className="w-64 glass-panel flex-col justify-between hidden md:flex sticky top-4 h-[calc(100vh-2rem)]">
         <div>
           <div className="p-8 pb-6 flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary-dark shadow-glow flex items-center justify-center">
-              <Zap size={18} className="text-white" />
-            </div>
+          <div className="h-10 w-10 rounded-xl overflow-hidden shadow-glow">
+    <img
+        src="/hi.png"
+        alt="MoonWitch"
+        className="w-full h-full object-cover"
+    />
+</div>
             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 tracking-wide">
               MoonWitch
             </span>
