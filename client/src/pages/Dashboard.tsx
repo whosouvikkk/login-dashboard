@@ -1,13 +1,36 @@
 import { useAuth } from '../hooks/useAuth';
 import { Zap, Activity, Shield, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const services = [
-    { id: 1, title: 'Data Extraction', icon: Activity, desc: 'Advanced OSINT gathering and formatting.' },
-    { id: 2, title: 'Wallet Watcher', icon: Zap, desc: 'Real-time transaction webhook alerts.' },
-    { id: 3, title: 'Secure Proxy', icon: Shield, desc: 'Encrypted routing for API requests.' },
+    {
+      id: 1,
+      title: 'TikTok Views',
+      icon: Activity,
+      desc: 'Boost TikTok views instantly using your credits.',
+      route: '/ttservice',
+      badge: 'LIVE',
+    },
+    {
+      id: 2,
+      title: 'Instagram',
+      icon: Zap,
+      desc: 'Coming Soon',
+      route: '#',
+      badge: 'SOON',
+    },
+    {
+      id: 3,
+      title: 'Telegram',
+      icon: Shield,
+      desc: 'Coming Soon',
+      route: '#',
+      badge: 'SOON',
+    },
   ];
 
   return (
@@ -49,7 +72,8 @@ export default function Dashboard() {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <div key={service.id} 
+              <div key={service.id}
+                onClick={() => { if (service.route !== "#") navigate(service.route); }}
                 className="glass-panel p-6 border border-white/5 hover:border-primary/40 transition-all duration-500 group cursor-pointer hover:-translate-y-1"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
