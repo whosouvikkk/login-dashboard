@@ -10,21 +10,18 @@ export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   
-  // Track toggle state between Login and Sign Up views
   const isSignUp = searchParams.get('mode') === 'signup';
   const [submitting, setSubmitting] = useState(false);
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const passwordValue = watch("password");
 
-  // Redirect if session token is validated automatically
   useEffect(() => {
     if (user) {
       navigate('/dashboard', { replace: true });
     }
   }, [user, navigate]);
 
-  // Reset entry inputs whenever shifting viewing forms
   useEffect(() => {
     reset();
   }, [isSignUp, reset]);
@@ -33,7 +30,6 @@ export default function Login() {
     setSubmitting(true);
     try {
       if (isSignUp) {
-        // Run API request context sequence for Registration mapping
         const response = await fetch(import.meta.env.PROD ? '/api/auth/signup' : 'http://localhost:5000/api/auth/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -47,13 +43,12 @@ export default function Login() {
         if (!response.ok) throw new Error(resData.message || 'Signup failed');
         
         toast.success('Registration verified! Secure account established.');
-        // Authenticate new payload session token immediately
         await login({ email: data.email, password: data.password });
       } else {
         await login({ email: data.email, password: data.password });
         toast.success('Access configuration verified.');
       }
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch (err: any) {
       toast.error(err.message || 'Authentication processing exception thrown.');
     } finally {
@@ -61,12 +56,14 @@ export default function Login() {
     }
   };
 
+  // The perfectly aligned, dark-theme input styling
+  const inputStyles = "w-full bg-[#0B0914]/80 backdrop-blur-md border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner";
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[130px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
       <div className="w-full max-w-md relative z-10 animate-slide-up">
-        {/* Branding Logo header */}
         <div className="flex flex-col items-center mb-8">
           <Link to="/" className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center mb-4 hover:scale-105 transition-transform">
             <Zap size={24} className="text-white" />
@@ -79,19 +76,18 @@ export default function Login() {
           </p>
         </div>
 
-        {/* Interactive Glassmorphism Form container */}
         <div className="glass-panel p-8 border border-white/5">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             
             {isSignUp && (
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Username</label>
-                <div className="relative">
-                  <User size={18} className="absolute left-4 top-3.5 text-gray-500" />
+                <div className="relative flex items-center">
+                  <User size={18} className="absolute left-4 text-gray-500 pointer-events-none" />
                   <input
                     type="text"
                     placeholder="dev_operator"
-                    className="input-field pl-12"
+                    className={inputStyles}
                     {...register('username', { required: 'Username context string required.' })}
                   />
                 </div>
@@ -101,12 +97,12 @@ export default function Login() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Email Address</label>
-              <div className="relative">
-                <Mail size={18} className="absolute left-4 top-3.5 text-gray-500" />
+              <div className="relative flex items-center">
+                <Mail size={18} className="absolute left-4 text-gray-500 pointer-events-none" />
                 <input
                   type="email"
                   placeholder="operator@domain.com"
-                  className="input-field pl-12"
+                  className={inputStyles}
                   {...register('email', { 
                     required: 'Email routing data required.',
                     pattern: { value: /^\S+@\S+$/i, message: 'Invalid structured syntax parameters.' }
@@ -118,12 +114,12 @@ export default function Login() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Password Matrix</label>
-              <div className="relative">
-                <Lock size={18} className="absolute left-4 top-3.5 text-gray-500" />
+              <div className="relative flex items-center">
+                <Lock size={18} className="absolute left-4 text-gray-500 pointer-events-none" />
                 <input
                   type="password"
                   placeholder="••••••••••••"
-                  className="input-field pl-12"
+                  className={inputStyles}
                   {...register('password', { 
                     required: 'Security string missing key payload.',
                     minLength: { value: 6, message: 'String payload must contain at least 6 tokens.' }
@@ -136,12 +132,12 @@ export default function Login() {
             {isSignUp && (
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Confirm Password</label>
-                <div className="relative">
-                  <Lock size={18} className="absolute left-4 top-3.5 text-gray-500" />
+                <div className="relative flex items-center">
+                  <Lock size={18} className="absolute left-4 text-gray-500 pointer-events-none" />
                   <input
                     type="password"
                     placeholder="••••••••••••"
-                    className="input-field pl-12"
+                    className={inputStyles}
                     {...register('confirmPassword', { 
                       required: 'Validation confirmation payload verification required.',
                       validate: value => value === passwordValue || 'Cryptographic entries mismatch detected.'
