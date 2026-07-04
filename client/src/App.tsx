@@ -15,7 +15,7 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden flex flex-col">
-      <nav className="glass-panel mx-6 mt-6 p-4 px-8 flex justify-between items-center z-50 shrink-0">
+      <nav className="glass-panel relative z-50 mx-6 mt-6 p-4 px-8 flex justify-between items-center shrink-0">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center">
             <Zap size={18} className="text-white" />
