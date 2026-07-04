@@ -60,10 +60,22 @@ export default function Dashboard() {
             Credits are consumed when utilizing premium API endpoints or launching automated background tasks.
           </p>
           
-          <button className="mt-6 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 group/btn">
-            Top Up Balance 
-            <ArrowRight size={16} className="text-gray-400 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
+          <button
+  onClick={() =>
+    window.open(
+      "https://t.me/moonwitchadminbot",
+      "_blank"
+    )
+  }
+  className="mt-6 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 group/btn"
+>
+  Top Up Balance
+
+  <ArrowRight
+    size={16}
+    className="text-gray-400 group-hover/btn:translate-x-1 transition-transform"
+  />
+</button>
         </div>
       </div>
 
