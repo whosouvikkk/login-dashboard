@@ -3,11 +3,15 @@ import { useAuth } from '../hooks/useAuth';
 import { Shield, Users, Zap, LayoutDashboard, ArrowLeft, LogOut } from 'lucide-react';
 
 export default function AdminLayout() {
-  const { user, logout, loading } = useAuth();
-  const location = useLocation();
+  const { logout } = useAuth();
+const location = useLocation();
 
-  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center text-primary font-medium">Loading Admin Panel...</div>;
-  if (!user || user.role !== 'admin') return <Navigate to="/dashboard" replace />;
+const isAdmin =
+  sessionStorage.getItem("moonwitch_admin") === "true";
+
+if (!isAdmin) {
+  return <Navigate to="/admin-login" replace />;
+}
 
   const adminNav = [
     { label: 'Overview', path: '/admin', icon: LayoutDashboard },
