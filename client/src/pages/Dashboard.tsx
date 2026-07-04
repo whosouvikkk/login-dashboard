@@ -12,7 +12,7 @@ export default function Dashboard() {
       title: 'TikTok Views',
       icon: Activity,
       desc: 'Boost TikTok views instantly using your credits.',
-      route: '/ttservice',
+      route: "ttservice",
       badge: 'LIVE',
     },
     {
@@ -73,7 +73,11 @@ export default function Dashboard() {
             const Icon = service.icon;
             return (
               <div key={service.id}
-                onClick={() => { if (service.route !== "#") navigate(service.route); }}
+               onClick={() => {
+  if (service.route !== "#") {
+    navigate(service.route);
+  }
+}}
                 className="glass-panel p-6 border border-white/5 hover:border-primary/40 transition-all duration-500 group cursor-pointer hover:-translate-y-1"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
