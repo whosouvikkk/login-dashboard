@@ -7,86 +7,201 @@ const router = express.Router();
 
 router.use(protect, admin);
 
-// @route GET /api/admin/users
+/*
+|--------------------------------------------------------------------------
+| GET ALL USERS
+|--------------------------------------------------------------------------
+*/
 router.get('/users', async (req, res) => {
   try {
     await connectDB();
-    const users = await User.find().select('-password').sort({ createdAt: -1 });
+
+    const users = await User.find({})
+      .select('-password')
+      .sort({ createdAt: -1 });
+
     res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch users' });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: 'Failed to fetch users',
+    });
   }
 });
 
-// @route GET /api/admin/user/:id
+/*
+|--------------------------------------------------------------------------
+| GET SINGLE USER
+|--------------------------------------------------------------------------
+*/
 router.get('/user/:id', async (req, res) => {
   try {
     await connectDB();
+
     const user = await User.findById(req.params.id).select('-password');
-    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
     res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch user' });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: 'Failed to fetch user',
+    });
   }
 });
 
-// @route PUT /api/admin/user/:id/credits
+/*
+|--------------------------------------------------------------------------
+| ADD / REMOVE CREDITS
+|--------------------------------------------------------------------------
+*/
 router.put('/user/:id/credits', async (req, res) => {
   try {
     await connectDB();
-    const { amount, action } = req.body; // action: 'add' | 'remove'
-    const numAmount = Number(amount);
 
-    if (isNaN(numAmount) || numAmount <= 0) {
-      return res.status(400).json({ message: 'Please provide a valid positive credit amount' });
+    const { amount, action } = req.body;
+
+    const credits = Number(amount);
+
+    if (isNaN(credits) || credits <= 0) {
+      return res.status(400).json({
+        message: 'Invalid credit amount',
+      });
     }
 
     const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
 
-    if (action === 'add') {
-      user.credits += numAmount;
-    } else if (action === 'remove') {
-      user.credits = Math.max(0, user.credits - numAmount); // Prevent negative balance
-    } else {
-      return res.status(400).json({ message: 'Invalid action type' });
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    switch (action) {
+      case 'add':
+        user.credits += credits;
+        break;
+
+      case 'remove':
+        user.credits = Math.max(
+          0,
+          user.credits - credits
+        );
+        break;
+
+      default:
+        return res.status(400).json({
+          message: 'Invalid action',
+        });
     }
 
     await user.save();
-    res.json({ id: user._id, credits: user.credits });
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to update credits' });
+
+    const updatedUser = await User.findById(user._id)
+      .select('-password');
+
+    res.json(updatedUser);
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: 'Unable to update credits',
+    });
   }
 });
 
-// @route PUT /api/admin/user/:id
+/*
+|--------------------------------------------------------------------------
+| UPDATE USER
+|--------------------------------------------------------------------------
+*/
 router.put('/user/:id', async (req, res) => {
   try {
     await connectDB();
-    const { username, email, role } = req.body;
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
 
-    if (username) user.username = username;
-    if (email) user.email = email;
-    if (role) user.role = role;
+    const {
+      username,
+      email,
+      role,
+    } = req.body;
+
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    if (username !== undefined)
+      user.username = username;
+
+    if (email !== undefined)
+      user.email = email;
+
+    if (role !== undefined)
+      user.role = role;
 
     await user.save();
-    const updated = await User.findById(req.params.id).select('-password');
+
+    const updated = await User.findById(user._id)
+      .select('-password');
+
     res.json(updated);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to update user' });
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: 'Unable to update user',
+    });
   }
 });
 
-// @route DELETE /api/admin/user/:id
+/*
+|--------------------------------------------------------------------------
+| DELETE USER
+|--------------------------------------------------------------------------
+*/
 router.delete('/user/:id', async (req, res) => {
   try {
     await connectDB();
-    await User.findByIdAndDelete(req.params.id);
-    res.json({ message: 'User removed successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to delete user' });
+
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    if (user.role === 'admin') {
+      return res.status(403).json({
+        message: 'Admin accounts cannot be deleted.',
+      });
+    }
+
+    await User.findByIdAndDelete(user._id);
+
+    res.json({
+      success: true,
+      message: 'User deleted successfully.',
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: 'Unable to delete user.',
+    });
   }
 });
 
