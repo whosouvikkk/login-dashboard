@@ -162,26 +162,69 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="ttservice" element={<TikTokService />} />
-            <Route index element={<Dashboard />} />
-            <Route path="services" element={<div className="text-gray-400 p-8 glass-panel border border-white/5 mt-4">Services index coming soon.</div>} />
-            <Route path="settings" element={
-              <div className="p-8 max-w-2xl mt-4">
-                <h3 className="text-2xl font-bold text-white mb-6">Profile Settings</h3>
+         <Route path="/dashboard" element={<DashboardLayout />}>
+    <Route index element={<Dashboard />} />
+
+    <Route
+        path="ttservice"
+        element={<TikTokService />}
+    />
+
+    <Route
+        path="ollulu"
+        element={<OlluluBot />}
+    />
+
+    <Route
+        path="services"
+        element={
+            <div className="text-gray-400 p-8 glass-panel border border-white/5 mt-4">
+                Services index coming soon.
+            </div>
+        }
+    />
+
+    <Route
+        path="settings"
+        element={
+            <div className="p-8 max-w-2xl mt-4">
+
+                <h3 className="text-2xl font-bold text-white mb-6">
+                    Profile Settings
+                </h3>
+
                 <div className="glass-panel p-6 border border-white/5 space-y-4">
-                  <div>
-                    <label className="block text-sm text-gray-400 mb-1">Account Role</label>
-                    <div className="text-white font-medium px-4 py-2 bg-surface/50 rounded-lg inline-block border border-white/5">Standard Operator</div>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-400 mb-1">Notification Preferences</label>
-                    <p className="text-sm text-gray-500">Discord Webhooks configured globally.</p>
-                  </div>
+
+                    <div>
+
+                        <label className="block text-sm text-gray-400 mb-1">
+                            Account Role
+                        </label>
+
+                        <div className="text-white font-medium px-4 py-2 bg-surface/50 rounded-lg inline-block border border-white/5">
+                            Standard Operator
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm text-gray-400 mb-1">
+                            Notification Preferences
+                        </label>
+
+                        <p className="text-sm text-gray-500">
+                            Discord Webhooks configured globally.
+                        </p>
+
+                    </div>
+
                 </div>
-              </div>
-            } />
-          </Route>
+
+            </div>
+        }
+    />
+</Route>
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
