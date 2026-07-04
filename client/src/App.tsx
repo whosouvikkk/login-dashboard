@@ -177,6 +177,13 @@ export default function App() {
               </div>
             } />
           </Route>
+
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="services" element={<AdminServices />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
       
