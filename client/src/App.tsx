@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminServices from './pages/admin/AdminServices';
 import AdminLogin from './pages/AdminLogin';
+import TikTokService from './pages/TikTokService';
 
 function LandingPage() {
   const faqs = [
@@ -161,6 +162,7 @@ export default function App() {
           <Route path="/admin-login" element={<AdminLogin />} />
           
           <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="ttservice" element={<TikTokService />} />
             <Route index element={<Dashboard />} />
             <Route path="services" element={<div className="text-gray-400 p-8 glass-panel border border-white/5 mt-4">Services index coming soon.</div>} />
             <Route path="settings" element={
