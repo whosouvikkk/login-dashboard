@@ -23,6 +23,42 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden flex flex-col">
+      {/* ================= Crystal Background ================= */}
+
+<div className="absolute inset-0 overflow-hidden pointer-events-none">
+
+  {/* Purple Glow */}
+  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-primary/10 blur-[220px]" />
+
+  {/* Top Left Crystal */}
+  <div className="absolute -top-40 -left-40 w-[420px] h-[420px] rotate-[22deg] rounded-[80px] border border-white/10 bg-white/[0.03] backdrop-blur-3xl" />
+
+  {/* Top Right Crystal */}
+  <div className="absolute top-16 -right-32 w-[420px] h-[420px] -rotate-[18deg] rounded-[100px] border border-primary/20 bg-primary/[0.05] backdrop-blur-3xl" />
+
+  {/* Bottom Left Crystal */}
+  <div className="absolute bottom-0 left-10 w-[320px] h-[320px] rotate-45 rounded-[60px] border border-white/5 bg-white/[0.02] backdrop-blur-2xl" />
+
+  {/* Bottom Right Crystal */}
+  <div className="absolute -bottom-28 right-10 w-[520px] h-[520px] -rotate-[30deg] rounded-[120px] border border-primary/10 bg-primary/[0.06] backdrop-blur-3xl" />
+
+  {/* Small Floating Crystal */}
+  <div className="absolute top-44 left-[18%] w-28 h-28 rotate-45 rounded-[30px] border border-white/10 bg-white/[0.04] backdrop-blur-xl" />
+
+  {/* Small Floating Crystal */}
+  <div className="absolute bottom-32 right-[20%] w-20 h-20 rotate-[25deg] rounded-[24px] border border-primary/20 bg-primary/[0.05] backdrop-blur-xl" />
+
+  {/* Grid */}
+  <div
+    className="absolute inset-0 opacity-[0.03]"
+    style={{
+      backgroundImage:
+        "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
+      backgroundSize: "70px 70px",
+    }}
+  />
+
+</div>
       <nav className="glass-panel relative z-50 mx-6 mt-6 p-4 px-8 flex justify-between items-center shrink-0">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center">
