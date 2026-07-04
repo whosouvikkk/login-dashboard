@@ -18,6 +18,10 @@ export default function TikTokService() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+const [remainingCredits, setRemainingCredits] = useState(
+  remainingCredits
+);
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -53,7 +57,7 @@ export default function TikTokService() {
 
       const requiredCredits = Math.ceil(qty / 1000);
 
-      if ((user?.credits ?? 0) < requiredCredits) {
+      if ((remainingCredits) < requiredCredits) {
         toast.error("Insufficient Credits");
         return;
       }
@@ -146,7 +150,7 @@ export default function TikTokService() {
               </p>
 
               <h3 className="text-3xl font-bold text-white">
-                {user?.credits ?? 0}
+                {remainingCredits}
               </h3>
 
             </div>
@@ -275,7 +279,7 @@ export default function TikTokService() {
 
                 <div className="mt-3 text-sm">
 
-                  {(user?.credits ?? 0) >= (selectedPackage ? selectedPackage.credits : credits) ? (
+                  {(remainingCredits) >= (selectedPackage ? selectedPackage.credits : credits) ? (
                     <span className="text-green-400">
                       You have enough credits.
                     </span>
@@ -295,7 +299,7 @@ export default function TikTokService() {
                   !link ||
                   (!selectedPackage && !amount) ||
                   (selectedPackage ? selectedPackage.credits : credits) <= 0 ||
-                  (user?.credits ?? 0) < (selectedPackage ? selectedPackage.credits : credits)
+                  (remainingCredits) < (selectedPackage ? selectedPackage.credits : credits)
                 }
                 onClick={() => selectedPackage ? submit(selectedPackage.quantity,false) : submit(Number(amount),true)}
                 className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed flex justify-center items-center gap-2"
