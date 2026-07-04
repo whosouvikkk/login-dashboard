@@ -16,11 +16,7 @@ import {
 
 export default function TikTokService() {
   const navigate = useNavigate();
- const { user, setUser } = useAuth();
-
-const [remainingCredits, setRemainingCredits] = useState(
-  remainingCredits
-);
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -57,26 +53,17 @@ const [remainingCredits, setRemainingCredits] = useState(
 
       const requiredCredits = Math.ceil(qty / 1000);
 
-      if ((remainingCredits) < requiredCredits) {
+      if ((user?.credits ?? 0) < requiredCredits) {
         toast.error("Insufficient Credits");
         return;
       }
 
       setLoading(true);
 
-      const { data } = await api.post("/services/tiktok", {
-    link,
-    quantity: qty,
-});
-
-setUser(prev =>
-    prev
-        ? {
-              ...prev,
-              credits: data.remainingCredits,
-          }
-        : prev
-);
+      await api.post("/services/tiktok", {
+        link,
+        quantity: qty,
+      });
 
       setSuccess(true);
 
@@ -159,7 +146,7 @@ setUser(prev =>
               </p>
 
               <h3 className="text-3xl font-bold text-white">
-                {remainingCredits}
+                {user?.credits ?? 0}
               </h3>
 
             </div>
@@ -288,7 +275,7 @@ setUser(prev =>
 
                 <div className="mt-3 text-sm">
 
-                  {(remainingCredits) >= (selectedPackage ? selectedPackage.credits : credits) ? (
+                  {(user?.credits ?? 0) >= (selectedPackage ? selectedPackage.credits : credits) ? (
                     <span className="text-green-400">
                       You have enough credits.
                     </span>
@@ -308,7 +295,7 @@ setUser(prev =>
                   !link ||
                   (!selectedPackage && !amount) ||
                   (selectedPackage ? selectedPackage.credits : credits) <= 0 ||
-                  (remainingCredits) < (selectedPackage ? selectedPackage.credits : credits)
+                  (user?.credits ?? 0) < (selectedPackage ? selectedPackage.credits : credits)
                 }
                 onClick={() => selectedPackage ? submit(selectedPackage.quantity,false) : submit(Number(amount),true)}
                 className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed flex justify-center items-center gap-2"
