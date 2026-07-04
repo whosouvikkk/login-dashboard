@@ -22,6 +22,7 @@ export default function TikTokService() {
   const [success, setSuccess] = useState(false);
 
   const [popup, setPopup] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<{title:string;quantity:number;credits:number}|null>(null);
 
   const [link, setLink] = useState("");
   const [amount, setAmount] = useState("");
@@ -162,14 +163,14 @@ export default function TikTokService() {
           title="1K Views"
           credits={1}
           quantity={1000}
-          onClick={() => submit(1000)}
+          onClick={() => { setSelectedPackage({title:"1K Views",quantity:1000,credits:1}); setPopup(true); }}
         />
 
         <ServiceCard
           title="5K Views"
           credits={5}
           quantity={5000}
-          onClick={() => submit(5000)}
+          onClick={() => { setSelectedPackage({title:"5K Views",quantity:5000,credits:5}); setPopup(true); }}
         />
 
         <div className="glass-panel p-7">
@@ -189,7 +190,7 @@ export default function TikTokService() {
           </p>
 
           <button
-            onClick={() => setPopup(true)}
+            onClick={() => { setSelectedPackage(null); setPopup(true); }}
             className="btn-primary w-full mt-8"
           >
             Launch
@@ -204,7 +205,7 @@ export default function TikTokService() {
           <div className="glass-panel w-full max-w-xl p-8 animate-slide-up">
 
             <h2 className="text-3xl font-bold text-white mb-8">
-              Custom TikTok Views
+              {selectedPackage ? selectedPackage.title : "Custom TikTok Views"}
             </h2>
 
             <div className="space-y-5">
@@ -267,14 +268,14 @@ export default function TikTokService() {
                   </span>
 
                   <span className="text-primary font-bold text-2xl">
-                    {credits}
+                    {selectedPackage ? selectedPackage.credits : credits}
                   </span>
 
                 </div>
 
                 <div className="mt-3 text-sm">
 
-                  {(user?.credits ?? 0) >= credits ? (
+                  {(user?.credits ?? 0) >= (selectedPackage ? selectedPackage.credits : credits) ? (
                     <span className="text-green-400">
                       You have enough credits.
                     </span>
@@ -292,11 +293,11 @@ export default function TikTokService() {
                 disabled={
                   loading ||
                   !link ||
-                  !amount ||
-                  credits <= 0 ||
-                  (user?.credits ?? 0) < credits
+                  (!selectedPackage && !amount) ||
+                  (selectedPackage ? selectedPackage.credits : credits) <= 0 ||
+                  (user?.credits ?? 0) < (selectedPackage ? selectedPackage.credits : credits)
                 }
-                onClick={() => submit(Number(amount), true)}
+                onClick={() => selectedPackage ? submit(selectedPackage.quantity,false) : submit(Number(amount),true)}
                 className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed flex justify-center items-center gap-2"
               >
 
