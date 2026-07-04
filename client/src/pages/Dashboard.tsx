@@ -1,129 +1,81 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import api from '../services/api';
-import toast from 'react-hot-toast';
-import { Zap, ExternalLink, Activity, ShieldCheck } from 'lucide-react';
-
-interface ServiceItem {
-  id: string;
-  name: string;
-  description: string;
-  status: string;
-  route: string;
-}
+import { useAuth } from '../hooks/useAuth';
+import { Zap, Activity, Shield, ArrowRight } from 'lucide-react';
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const [services, setServices] = useState<ServiceItem[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const res = await api.get('/services');
-        setServices(res.data);
-      } catch (err) {
-        toast.error('Failed to load available services');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchServices();
-  }, []);
-
-  const handleLaunch = (serviceName: string) => {
-    toast.success(`Initializing sandbox for ${serviceName}...`);
-  };
+  const services = [
+    { id: 1, title: 'Data Extraction', icon: Activity, desc: 'Advanced OSINT gathering and formatting.' },
+    { id: 2, title: 'Wallet Watcher', icon: Zap, desc: 'Real-time transaction webhook alerts.' },
+    { id: 3, title: 'Secure Proxy', icon: Shield, desc: 'Encrypted routing for API requests.' },
+  ];
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Banner */}
-      <div className="glass-panel p-8 bg-gradient-to-r from-purple-900/20 via-zinc-900/40 to-zinc-900/40 border-purple-500/30">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome back, {user?.username}</h1>
-            <p className="text-text-muted text-sm">Your unified workspace and shared credit wallet are active and ready.</p>
-          </div>
-          <div className="glass-panel p-6 bg-zinc-950/60 border-primary/40 min-w-48 text-center shadow-glow">
-            <span className="text-xs uppercase tracking-widest text-text-muted font-semibold block mb-1">Moon Credits</span>
-            <span className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-primary">
-              {user?.credits}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-primary">
-            <Activity size={22} />
-          </div>
-          <div>
-            <div className="text-sm text-text-muted">System Status</div>
-            <div className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span> All Systems Operational
-            </div>
-          </div>
-        </div>
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-primary">
-            <Zap size={22} />
-          </div>
-          <div>
-            <div className="text-sm text-text-muted">Available Modules</div>
-            <div className="text-lg font-bold text-white">{services.length} Connected Services</div>
-          </div>
-        </div>
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-primary">
-            <ShieldCheck size={22} />
-          </div>
-          <div>
-            <div className="text-sm text-text-muted">Security Tier</div>
-            <div className="text-lg font-bold text-white capitalize">{user?.role} Privilege</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Service Cards Section */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-          <Zap className="text-primary" size={20} /> Deployable Services
-        </h2>
+    <div className="space-y-8 animate-slide-up max-w-6xl mx-auto">
+      
+      {/* Hero Stats Card */}
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface/30 p-8 shadow-2xl backdrop-blur-xl group">
+        {/* Animated Gradient Background */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 group-hover:bg-primary/30 transition-colors duration-700"></div>
         
-        {loading ? (
-          <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="glass-panel p-6 h-48 animate-pulse bg-white/5"></div>
-            ))}
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></div>
+            <p className="text-gray-400 font-medium text-sm tracking-wider uppercase">Active Credits</p>
           </div>
-        ) : (
-          <div className="grid md:grid-cols-3 gap-6">
-            {services.map((svc) => (
-              <div key={svc.id} className="glass-panel-interactive p-6 flex flex-col justify-between group">
-                <div>
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                      <Zap size={20} />
-                    </div>
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      {svc.status}
-                    </span>
+          
+          <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 tracking-tight mt-2">
+            {user?.credits?.toLocaleString() || '0'}
+          </h1>
+          
+          <p className="text-gray-500 mt-4 max-w-md">
+            Credits are consumed when utilizing premium API endpoints or launching automated background tasks.
+          </p>
+          
+          <button className="mt-6 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 group/btn">
+            Top Up Balance 
+            <ArrowRight size={16} className="text-gray-400 group-hover/btn:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+
+      {/* Services Grid */}
+      <div>
+        <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+          <Zap size={20} className="text-primary" /> Active Services
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <div key={service.id} 
+                className="glass-panel p-6 border border-white/5 hover:border-primary/40 transition-all duration-500 group cursor-pointer hover:-translate-y-1"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <div className="flex justify-between items-start mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-surface border border-white/5 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:border-primary/20 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500">
+                    <Icon size={26} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors">{svc.name}</h3>
-                  <p className="text-text-muted text-sm leading-relaxed mb-6">{svc.description}</p>
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                    Ready
+                  </span>
                 </div>
-                <button
-                  onClick={() => handleLaunch(svc.name)}
-                  className="w-full bg-white/5 hover:bg-primary text-white border border-white/10 hover:border-primary py-2.5 rounded-xl transition-all font-medium flex items-center justify-center gap-2 text-sm"
-                >
-                  Launch Sandbox <ExternalLink size={16} />
+                
+                <h4 className="text-xl font-semibold text-gray-100 group-hover:text-white transition-colors">{service.title}</h4>
+                <p className="text-sm text-gray-500 mt-2 mb-6 leading-relaxed">
+                  {service.desc}
+                </p>
+                
+                <div className="w-full h-[1px] bg-gradient-to-r from-white/10 to-transparent mb-4"></div>
+                
+                <button className="text-primary font-medium flex items-center gap-2 text-sm hover:text-primary-hover transition-colors">
+                  Launch App <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
