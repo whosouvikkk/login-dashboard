@@ -1,66 +1,60 @@
-import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { Shield, Users, Zap, LayoutDashboard, ArrowLeft, LogOut } from 'lucide-react';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Shield } from "lucide-react";
 
-export default function AdminLayout() {
-  const { logout } = useAuth();
-  const location = useLocation();
+const ADMIN_PASSWORD = "kaddulele";
 
-  const isAdmin = sessionStorage.getItem("moonwitch_admin") === "true";
+export default function AdminLogin() {
+  const navigate = useNavigate();
 
-  if (!isAdmin) {
-    return <Navigate to="/admin-login" replace />;
-  }
+  const [password, setPassword] = useState("");
 
-  const adminNav = [
-    { label: 'Overview', path: '/admin', icon: LayoutDashboard },
-    { label: 'User Management', path: '/admin/users', icon: Users },
-    { label: 'Services Config', path: '/admin/services', icon: Zap },
-  ];
+  const handleLogin = () => {
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem("moonwitch_admin", "true");
+      toast.success("Admin access granted.");
+      navigate("/admin", { replace: true });
+    } else {
+      toast.error("Invalid admin password.");
+    }
+  };
 
   return (
-    <div className="min-h-screen flex bg-background">
-      <aside className="w-64 glass-panel m-4 flex flex-col justify-between border-purple-500/30">
-        <div>
-          <div className="p-6 text-xl font-bold tracking-wide text-white flex items-center gap-3 border-b border-white/10">
-            <Shield className="text-primary" /> Admin Command
+    <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+      <div className="glass-panel p-8 w-full max-w-md border border-white/5 relative z-10 animate-slide-up">
+
+        <div className="flex flex-col items-center mb-8">
+          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-primary to-purple-800 shadow-glow flex items-center justify-center mb-4">
+            <Shield className="text-white" size={28} />
           </div>
-          <nav className="p-4 space-y-1.5">
-            {adminNav.map((item) => {
-              const Icon = item.icon;
-              const active = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-                    active ? 'bg-primary text-white shadow-glow' : 'text-text-muted hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Icon size={18} /> {item.label}
-                </Link>
-              );
-            })}
-            <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-muted hover:text-white hover:bg-white/5 font-medium mt-8 border border-white/5">
-              <ArrowLeft size={18} /> Exit Admin
-            </Link>
-          </nav>
+
+          <h1 className="text-2xl font-bold text-white">
+            Admin Login
+          </h1>
+
+          <p className="text-sm text-gray-500 mt-2 text-center">
+            Enter your administrator password to continue.
+          </p>
         </div>
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={() => {
-              sessionStorage.removeItem("moonwitch_admin");
-              logout();
-              window.location.href="/admin-login";
-            }}
-            className="flex items-center gap-3 p-3 w-full rounded-xl hover:bg-red-500/10 text-red-400 font-medium">
-            <LogOut size={18} /> Logout
-          </button>
-        </div>
-      </aside>
-      <main className="flex-1 m-4 ml-0 glass-panel p-8 overflow-y-auto">
-        <Outlet />
-      </main>
+
+        <input
+          type="password"
+          placeholder="Administrator Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full bg-[#0B0914]/80 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-gray-500 outline-none focus:border-primary mb-6"
+        />
+
+        <button
+          onClick={handleLogin}
+          className="btn-primary w-full py-3 font-semibold"
+        >
+          Login
+        </button>
+      </div>
     </div>
   );
 }
