@@ -397,25 +397,50 @@ export default function OlluluBot() {
 
                       </div>
 
-                    ) : typeof value ===
-                      "object" &&
-                      value !== null ? (
+                    ) : typeof value === "object" && value !== null ? (
 
-                      <pre className="bg-white/5 rounded-xl p-4 overflow-auto text-sm text-white whitespace-pre-wrap break-all">
+  type === "number" ? (
 
-{JSON.stringify(value, null, 2)}
+    <div className="space-y-3">
 
-                      </pre>
+      {Object.entries(value).map(([field, fieldValue]) => (
 
-                    ) : (
+        <div
+          key={field}
+          className="rounded-xl bg-white/5 border border-white/10 p-4"
+        >
 
-                      <p className="text-white text-lg font-medium break-all">
+          <p className="text-xs uppercase tracking-wider text-primary mb-2">
+            {field.replace(/_/g, " ")}
+          </p>
 
-                        {String(value)}
+          <p className="text-white break-all leading-7">
+            {fieldValue === null || fieldValue === ""
+              ? "N/A"
+              : String(fieldValue)}
+          </p>
 
-                      </p>
+        </div>
 
-                    )}
+      ))}
+
+    </div>
+
+  ) : (
+
+    <pre className="bg-white/5 rounded-xl p-4 overflow-auto text-sm text-white whitespace-pre-wrap break-all">
+      {JSON.stringify(value, null, 2)}
+    </pre>
+
+  )
+
+) : (
+
+  <p className="text-white text-lg font-medium break-all">
+    {String(value)}
+  </p>
+
+)}
 
                   </div>
 
