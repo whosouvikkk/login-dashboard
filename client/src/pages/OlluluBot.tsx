@@ -145,7 +145,7 @@ export default function OlluluBot() {
         <div>
 
           <h1 className="text-4xl font-black text-white">
-            Ollulu Bot lulullu
+            Osint Bot Lookup
           </h1>
 
           <p className="text-gray-400 mt-2">
