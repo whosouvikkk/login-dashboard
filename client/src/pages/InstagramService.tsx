@@ -233,7 +233,7 @@ export default function InstagramService() {
           </div>
 
           <h2 className="text-2xl font-bold text-white mt-6">
-            Custom
+            Custom Amount
           </h2>
 
           <p className="text-gray-500 mt-2">
@@ -444,7 +444,7 @@ export default function InstagramService() {
           />
 
           <PricingCard
-            title="Custom"
+            title="Custom Amount"
             credits="2500 Views = 1 Credit"
           />
 
