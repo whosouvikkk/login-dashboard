@@ -1,5 +1,5 @@
 import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { Shield, Users, Zap, LayoutDashboard, ArrowLeft, LogOut } from 'lucide-react';
 
 export default function AdminLayout() {
