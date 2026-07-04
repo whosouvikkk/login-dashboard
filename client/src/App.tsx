@@ -5,6 +5,10 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
 import { Zap, Shield, CreditCard, ArrowRight, HelpCircle } from 'lucide-react';
+import AdminLayout from './layouts/AdminLayout';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import AdminServices from './pages/AdminServices';
 
 function LandingPage() {
   const faqs = [
