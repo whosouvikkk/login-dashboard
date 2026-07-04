@@ -96,7 +96,7 @@ function LandingPage() {
         <div className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
         {/* ================= Floating Glass Cards ================= */}
 
-<div className="hidden xl:flex absolute left-0 top-24 glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
+<div className="hidden xl:flex absolute -left-24 top-56 glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
 
     <div>
 
@@ -117,7 +117,7 @@ function LandingPage() {
 
 </div>
 
-<div className="hidden xl:flex absolute right-0 top-16 glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
+<div className="hidden xl:flex absolute -right-24 top-52 glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
 
     <div>
 
@@ -138,7 +138,7 @@ function LandingPage() {
 
 </div>
 
-<div className="hidden xl:flex absolute right-24 bottom-10 glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
+<div className="hidden xl:flex absolute right-8 bottom-[-60px] glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl w-56 justify-between items-center hover:scale-105 transition-all duration-500">
 
     <div>
 
