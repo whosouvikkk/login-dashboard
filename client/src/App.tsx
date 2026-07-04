@@ -6,9 +6,9 @@ import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
 import { Zap, Shield, CreditCard, ArrowRight, HelpCircle } from 'lucide-react';
 import AdminLayout from './layouts/AdminLayout';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminUsers from './pages/AdminUsers';
-import AdminServices from './pages/AdminServices';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminServices from './pages/admin/AdminServices';
 import AdminLogin from './pages/AdminLogin';
 
 function LandingPage() {
