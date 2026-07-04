@@ -163,28 +163,169 @@ function LandingPage() {
           MoonWitch Services
         </span>
         
-        <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 tracking-tight leading-tight max-w-4xl">
-          One Account. Multiple Services.
-        </h1>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-500 tracking-tight leading-[1.05] max-w-5xl drop-shadow-[0_0_40px_rgba(139,92,246,0.35)]">
+  One Account.
+  <br />
+  Infinite Possibilities.
+</h1>
         
         <p className="text-gray-400 text-lg md:text-xl mt-6 max-w-2xl leading-relaxed">
           Access an expanding suite of premium cloud microservices, monitoring utilities, and data pipelines from a centralized dashboard using one shared credit wallet.
         </p>
         
         <div className="mt-10 flex flex-col sm:flex-row gap-4 z-20">
-          <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer">
+          <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer hover:scale-105 hover:shadow-[0_0_50px_rgba(139,92,246,0.45)] transition-all duration-300">
             Create an Account <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link to="/login" className="bg-white/5 hover:bg-white/10 border border-white/5 text-white px-8 py-3.5 rounded-xl font-medium transition-all cursor-pointer">
+          <Link to="/login" className="bg-white/5 hover:bg-white/10 hover:border-primary/30 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all duration-300 hover:scale-105 cursor-pointer">
             Dashboard
           </Link>
         </div>
       </section>
 
+      {/* ================= Dashboard Preview ================= */}
+
+<section className="max-w-6xl mx-auto px-6 -mt-6 mb-28 relative z-20">
+
+    <div className="glass-panel border border-white/10 rounded-3xl p-8 hover:scale-[1.01] transition-all duration-500 shadow-[0_0_80px_rgba(139,92,246,.08)]">
+
+        <div className="flex justify-between items-center">
+
+            <div>
+
+                <p className="text-gray-400 uppercase tracking-widest text-xs">
+
+                    Dashboard Preview
+
+                </p>
+
+                <h2 className="text-5xl font-black text-white mt-2">
+
+                    248 Credits
+
+                </h2>
+
+                <p className="text-gray-500 mt-3">
+
+                    Unified Wallet
+
+                </p>
+
+            </div>
+
+            <div className="px-5 py-2 rounded-xl bg-primary/10 border border-primary/20 text-primary font-semibold">
+
+                ● ONLINE
+
+            </div>
+
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
+
+            <div className="glass-panel p-6 hover:border-primary/30 transition-all">
+
+                <div className="flex justify-between items-center">
+
+                    <h3 className="text-white font-bold">
+
+                        TikTok Views
+
+                    </h3>
+
+                    <Activity
+                        className="text-primary"
+                        size={24}
+                    />
+
+                </div>
+
+                <p className="text-gray-400 text-sm mt-4">
+
+                    High-Speed Delivery
+
+                </p>
+
+                <div className="mt-5 text-green-400">
+
+                    ● READY
+
+                </div>
+
+            </div>
+
+            <div className="glass-panel p-6 hover:border-primary/30 transition-all">
+
+                <div className="flex justify-between items-center">
+
+                    <h3 className="text-white font-bold">
+
+                        Instagram Views
+
+                    </h3>
+
+                    <Zap
+                        className="text-primary"
+                        size={24}
+                    />
+
+                </div>
+
+                <p className="text-gray-400 text-sm mt-4">
+
+                    Instant Processing
+
+                </p>
+
+                <div className="mt-5 text-green-400">
+
+                    ● READY
+
+                </div>
+
+            </div>
+
+            <div className="glass-panel p-6 hover:border-primary/30 transition-all">
+
+                <div className="flex justify-between items-center">
+
+                    <h3 className="text-white font-bold">
+
+                        OSINT Lookup
+
+                    </h3>
+
+                    <Shield
+                        className="text-primary"
+                        size={24}
+                    />
+
+                </div>
+
+                <p className="text-gray-400 text-sm mt-4">
+
+                    Premium Lookup
+
+                </p>
+
+                <div className="mt-5 text-green-400">
+
+                    ● READY
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
       <section id="features" className="max-w-6xl mx-auto px-6 py-20 w-full relative z-10 animate-fade-in">
         <h3 className="text-2xl font-bold text-white mb-12 text-center tracking-wide">Engineered for Performance</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
+          <div className="glass-panel p-8 border border-white/5 hover:border-primary/40 hover:-translate-y-2 hover:shadow-[0_0_45px_rgba(139,92,246,0.15)] transition-all duration-500">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <Shield size={22} />
             </div>
@@ -193,7 +334,7 @@ function LandingPage() {
               Industrial grade JWT sessions paired with cryptographic password hashing keeps your service integrations fully isolated.
             </p>
           </div>
-          <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
+          <div className="glass-panel p-8 border border-white/5 hover:border-primary/40 hover:-translate-y-2 hover:shadow-[0_0_45px_rgba(139,92,246,0.15)] transition-all duration-500">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <CreditCard size={22} />
             </div>
@@ -202,7 +343,7 @@ function LandingPage() {
               Eliminate multiple platform subscriptions. Deposit balance once and scale compute consumption fluidly across tools.
             </p>
           </div>
-          <div className="glass-panel p-8 border border-white/5 hover:border-primary/30 transition-all duration-300">
+          <div className="glass-panel p-8 border border-white/5 hover:border-primary/40 hover:-translate-y-2 hover:shadow-[0_0_45px_rgba(139,92,246,0.15)] transition-all duration-500">
             <div className="h-12 w-12 rounded-xl bg-surface border border-white/5 flex items-center justify-center text-primary mb-6 shadow-md">
               <Zap size={22} />
             </div>
@@ -241,13 +382,19 @@ function LandingPage() {
         </h3>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="glass-panel p-6 border border-white/5">
+            <div key={index} className="glass-panel p-6 border border-white/5 hover:border-primary/25 hover:bg-white/[0.02] transition-all duration-300">
               <h5 className="text-white font-medium text-base">{faq.q}</h5>
               <p className="text-sm text-gray-400 mt-2.5 leading-relaxed">{faq.a}</p>
             </div>
           ))}
         </div>
       </section>
+
+      <div className="relative h-32 overflow-hidden">
+
+  <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[900px] h-[300px] bg-primary/10 blur-[180px]" />
+
+</div>
 
       <footer className="border-t border-white/5 bg-surface/20 backdrop-blur-md p-8 px-12 mt-auto text-center md:flex md:justify-between md:items-center text-sm text-gray-500">
         <p>© 2026 MoonWitch. All rights operational.</p>
