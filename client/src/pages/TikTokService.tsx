@@ -16,7 +16,7 @@ import {
 
 export default function TikTokService() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+ const { user, setUser } = useAuth();
 
 const [remainingCredits, setRemainingCredits] = useState(
   remainingCredits
@@ -64,10 +64,19 @@ const [remainingCredits, setRemainingCredits] = useState(
 
       setLoading(true);
 
-      await api.post("/services/tiktok", {
-        link,
-        quantity: qty,
-      });
+      const { data } = await api.post("/services/tiktok", {
+    link,
+    quantity: qty,
+});
+
+setUser(prev =>
+    prev
+        ? {
+              ...prev,
+              credits: data.remainingCredits,
+          }
+        : prev
+);
 
       setSuccess(true);
 
