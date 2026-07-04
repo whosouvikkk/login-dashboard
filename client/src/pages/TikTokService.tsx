@@ -10,6 +10,8 @@ import {
   Zap,
   Loader2,
   CheckCircle2,
+  Link2,
+  Hash,
 } from "lucide-react";
 
 export default function TikTokService() {
@@ -20,7 +22,6 @@ export default function TikTokService() {
   const [success, setSuccess] = useState(false);
 
   const [popup, setPopup] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<null | { quantity:number; credits:number; title:string }>(null);
 
   const [link, setLink] = useState("");
   const [amount, setAmount] = useState("");
@@ -161,14 +162,14 @@ export default function TikTokService() {
           title="1K Views"
           credits={1}
           quantity={1000}
-          onClick={() => { setSelectedPackage({quantity:1000,credits:1,title:"1K Views"}); setPopup(true); }}
+          onClick={() => submit(1000)}
         />
 
         <ServiceCard
           title="5K Views"
           credits={5}
           quantity={5000}
-          onClick={() => { setSelectedPackage({quantity:5000,credits:5,title:"5K Views"}); setPopup(true); }}
+          onClick={() => submit(5000)}
         />
 
         <div className="glass-panel p-7">
@@ -188,7 +189,7 @@ export default function TikTokService() {
           </p>
 
           <button
-            onClick={() => { setSelectedPackage(null); setPopup(true); }}
+            onClick={() => setPopup(true)}
             className="btn-primary w-full mt-8"
           >
             Launch
@@ -203,7 +204,7 @@ export default function TikTokService() {
           <div className="glass-panel w-full max-w-xl p-8 animate-slide-up">
 
             <h2 className="text-3xl font-bold text-white mb-8">
-              {selectedPackage ? selectedPackage.title : "Custom TikTok Views"}
+              Custom TikTok Views
             </h2>
 
             <div className="space-y-5">
@@ -214,34 +215,50 @@ export default function TikTokService() {
                   TikTok Link
                 </label>
 
-                <input
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
-                  className="input-field"
-                  placeholder="https://www.tiktok.com/..."
-                />
+                <div className="relative">
+
+                  <Link2
+                    size={18}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                  />
+
+                  <input
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
+                    placeholder="https://www.tiktok.com/..."
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300"
+                  />
+
+                </div>
 
               </div>
-              {!selectedPackage && (
+
               <div>
 
                 <label className="text-sm text-gray-400 block mb-2">
                   Amount
                 </label>
 
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="input-field"
-                  placeholder="1000"
-                />
+                <div className="relative">
+
+                  <Hash
+                    size={18}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                  />
+
+                  <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="1000"
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300"
+                  />
+
+                </div>
 
               </div>
-              )}
 
               <div className="glass-panel p-5">
-
 
                 <div className="flex justify-between">
 
@@ -250,14 +267,14 @@ export default function TikTokService() {
                   </span>
 
                   <span className="text-primary font-bold text-2xl">
-                    {selectedPackage ? selectedPackage.credits : credits}
+                    {credits}
                   </span>
 
                 </div>
 
                 <div className="mt-3 text-sm">
 
-                  {(user?.credits ?? 0) >= (selectedPackage ? selectedPackage.credits : credits) ? (
+                  {(user?.credits ?? 0) >= credits ? (
                     <span className="text-green-400">
                       You have enough credits.
                     </span>
@@ -275,11 +292,11 @@ export default function TikTokService() {
                 disabled={
                   loading ||
                   !link ||
-                  (!selectedPackage && !amount) ||
-                  (selectedPackage ? selectedPackage.credits : credits) <= 0 ||
-                  (user?.credits ?? 0) < (selectedPackage ? selectedPackage.credits : credits)
+                  !amount ||
+                  credits <= 0 ||
+                  (user?.credits ?? 0) < credits
                 }
-                onClick={() => selectedPackage ? submit(selectedPackage.quantity,false) : submit(Number(amount),true)}
+                onClick={() => submit(Number(amount), true)}
                 className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed flex justify-center items-center gap-2"
               >
 
