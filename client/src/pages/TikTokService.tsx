@@ -182,7 +182,7 @@ export default function TikTokService() {
           </div>
 
           <h2 className="text-2xl font-bold text-white mt-6">
-            Custom
+            Custom Amount
           </h2>
 
           <p className="text-gray-500 mt-2">
