@@ -4,24 +4,38 @@
 
 @layer base {
   body {
-    @apply bg-background text-text-main antialiased selection:bg-primary selection:text-white;
+    @apply bg-background text-gray-100 antialiased selection:bg-primary/30 selection:text-white min-h-screen relative overflow-x-hidden;
+  }
+  
+  /* Ambient Background Glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, rgba(0, 0, 0, 0) 50%);
+    z-index: -1;
+    pointer-events: none;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl shadow-glass transition-all duration-300;
+    @apply bg-surface/40 backdrop-blur-xl border border-white/5 rounded-2xl shadow-glass bg-glass-gradient relative overflow-hidden;
   }
-  .glass-panel-interactive {
-    @apply glass-panel hover:border-primary/50 hover:shadow-glow cursor-pointer;
+  
+  .glass-panel::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 transition-opacity duration-500;
   }
+  
+  .glass-panel:hover::before {
+    @apply opacity-100;
+  }
+
   .btn-primary {
-    @apply bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl transition-all duration-300 shadow-glow font-medium flex items-center justify-center gap-2;
-  }
-  .btn-secondary {
-    @apply bg-white/5 hover:bg-white/10 text-white border border-white/10 px-6 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-2;
-  }
-  .input-field {
-    @apply w-full bg-zinc-900/60 border border-white/10 rounded-xl px-4 py-3 text-text-main placeholder-text-muted/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all;
+    @apply relative overflow-hidden bg-primary text-white px-6 py-2.5 rounded-xl transition-all duration-300 font-medium shadow-glow hover:shadow-glow-hover hover:bg-primary-hover active:scale-95;
   }
 }
