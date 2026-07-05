@@ -89,10 +89,10 @@ export default function OlluluBot() {
       return;
     }
 
-    if (remainingCredits < 1) {
-      toast.error("Insufficient credits.");
-      return;
-    }
+   // if (remainingCredits < 1) {
+    //  toast.error("Insufficient credits.");
+  //    return;
+  //  }
 
     try {
       setLoading(true);
