@@ -63,7 +63,7 @@ export default function Dashboard() {
           <button
   onClick={() =>
     window.open(
-      "https://t.me/moonwitchadminbot",
+      "https://moon-payment.vercel.app/",
       "_blank"
     )
   }
