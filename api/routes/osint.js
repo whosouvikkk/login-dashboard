@@ -47,12 +47,12 @@ router.post("/search", async (req, res) => {
       });
     }
 
-    if (user.credits < 1) {
-      return res.status(400).json({
-        success: false,
-        message: "Insufficient credits.",
-      });
-    }
+   // if (user.credits < 1) {
+   //   return res.status(400).json({
+     //   success: false,
+       // message: "Insufficient credits.",
+    //  });
+  //  }
 
     const response = await axios.get(
       baseURL + encodeURIComponent(query)
@@ -65,8 +65,8 @@ router.post("/search", async (req, res) => {
       });
     }
 
-    user.credits -= 1;
-    await user.save();
+  //  user.credits -= 1;
+   // await user.save();
 
     res.json({
       success: true,
