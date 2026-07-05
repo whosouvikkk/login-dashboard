@@ -377,13 +377,124 @@ export default function App() {
     />
 
     <Route
-        path="services"
-        element={
-            <div className="text-gray-400 p-8 glass-panel border border-white/5 mt-4">
-                Services index coming soon.
+    path="services"
+    element={
+        <div className="max-w-5xl mx-auto mt-4">
+
+            <div className="glass-panel border border-white/5 p-8">
+
+                <h2 className="text-3xl font-bold text-white mb-2">
+                    Services Status
+                </h2>
+
+                <p className="text-gray-400 mb-8">
+                    Live status of all MoonWitch services.
+                </p>
+
+                <div className="space-y-5">
+
+                    <div className="glass-panel border border-green-500/20 bg-green-500/5 p-5 flex justify-between items-center">
+
+                        <div>
+                            <h3 className="text-white font-semibold">
+                                TikTok Views
+                            </h3>
+
+                            <p className="text-sm text-gray-400 mt-1">
+                                Delivery Time: Approx. 4 Hours
+                            </p>
+                        </div>
+
+                        <div className="text-right">
+                            <span className="text-green-400 font-semibold">
+                                ● RUNNING
+                            </span>
+
+                            <p className="text-sm text-primary mt-1">
+                                Charges MoonWitch Credits
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div className="glass-panel border border-green-500/20 bg-green-500/5 p-5 flex justify-between items-center">
+
+                        <div>
+                            <h3 className="text-white font-semibold">
+                                Instagram Views
+                            </h3>
+
+                            <p className="text-sm text-gray-400 mt-1">
+                                Delivery Time: Approx. 5 Hours
+                            </p>
+                        </div>
+
+                        <div className="text-right">
+                            <span className="text-green-400 font-semibold">
+                                ● RUNNING
+                            </span>
+
+                            <p className="text-sm text-primary mt-1">
+                                Charges MoonWitch Credits
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div className="glass-panel border border-green-500/20 bg-green-500/5 p-5 flex justify-between items-center">
+
+                        <div>
+                            <h3 className="text-white font-semibold">
+                                OSINT Lookup
+                            </h3>
+
+                            <p className="text-sm text-gray-400 mt-1">
+                                Number • Aadhaar • Vehicle • UPI • Bomber
+                            </p>
+                        </div>
+
+                        <div className="text-right">
+                            <span className="text-green-400 font-semibold">
+                                ● RUNNING
+                            </span>
+
+                            <p className="text-sm text-green-400 mt-1">
+                                FREE OF COST
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div className="glass-panel border border-yellow-500/20 bg-yellow-500/5 p-5 flex justify-between items-center">
+
+                        <div>
+                            <h3 className="text-white font-semibold">
+                                Discord Offline Members
+                            </h3>
+
+                            <p className="text-sm text-gray-400 mt-1">
+                                Feature currently under development.
+                            </p>
+                        </div>
+
+                        <div className="text-right">
+                            <span className="text-yellow-400 font-semibold">
+                                ● COMING SOON
+                            </span>
+
+                            <p className="text-sm text-yellow-300 mt-1">
+                                Work In Progress
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        }
-    />
+        </div>
+    }
+/>
 
     <Route
         path="settings"
