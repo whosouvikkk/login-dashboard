@@ -142,6 +142,7 @@ function LandingPage() {
   </Link>
 
 </div>
+</section>
 
       {/* ================= Dashboard Preview ================= */}
 
