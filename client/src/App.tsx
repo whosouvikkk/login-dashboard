@@ -20,6 +20,7 @@ import AdminLogin from './pages/AdminLogin';
 import TikTokService from './pages/TikTokService';
 import OlluluBot from "./pages/OlluluBot";
 import InstagramService from "./pages/InstagramService";
+import ApiDocs from "./pages/ApiDocs";
 
 function LandingPage() {
   const faqs = [
@@ -113,15 +114,34 @@ function LandingPage() {
           Access an expanding suite of premium cloud microservices, monitoring utilities, and data pipelines from a centralized dashboard using one shared credit wallet.
         </p>
         
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 z-20">
-          <Link to="/login?mode=signup" className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer hover:scale-105 hover:shadow-[0_0_50px_rgba(139,92,246,0.45)] transition-all duration-300">
-            Create an Account <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link to="/login" className="bg-white/5 hover:bg-white/10 hover:border-primary/30 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all duration-300 hover:scale-105 cursor-pointer">
-            Dashboard
-          </Link>
-        </div>
-      </section>
+        <div className="mt-10 flex flex-wrap justify-center gap-4 z-20">
+
+  <Link
+    to="/login?mode=signup"
+    className="btn-primary px-8 py-3.5 flex items-center gap-2 group cursor-pointer hover:scale-105 hover:shadow-[0_0_50px_rgba(139,92,246,0.45)] transition-all duration-300"
+  >
+    Create an Account
+    <ArrowRight
+      size={18}
+      className="group-hover:translate-x-1 transition-transform"
+    />
+  </Link>
+
+  <Link
+    to="/login"
+    className="bg-white/5 hover:bg-white/10 hover:border-primary/30 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
+  >
+    Dashboard
+  </Link>
+
+  <Link
+    to="/apidocs"
+    className="bg-white/5 hover:bg-primary/15 hover:border-primary/40 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
+  >
+    API Docs
+  </Link>
+
+</div>
 
       {/* ================= Dashboard Preview ================= */}
 
@@ -355,6 +375,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/apidocs" element={<ApiDocs />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           
         <Route path="/dashboard" element={<DashboardLayout />}>
