@@ -20,7 +20,6 @@ import AdminLogin from './pages/AdminLogin';
 import TikTokService from './pages/TikTokService';
 import OlluluBot from "./pages/OlluluBot";
 import InstagramService from "./pages/InstagramService";
-import ApiDocs from "./pages/ApiDocs";
 
 function LandingPage() {
   const faqs = [
@@ -134,12 +133,12 @@ function LandingPage() {
     Dashboard
   </Link>
 
-  <Link
-    to="/apidocs"
+  <a
+    href="/apidocs/"
     className="bg-white/5 hover:bg-primary/15 hover:border-primary/40 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
-  >
+>
     API Docs
-  </Link>
+</a>
 
 </div>
 </section>
@@ -376,7 +375,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/apidocs" element={<ApiDocs />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           
         <Route path="/dashboard" element={<DashboardLayout />}>
