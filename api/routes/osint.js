@@ -55,24 +55,72 @@ router.post("/search", async (req, res) => {
   //  }
 
     const response = await axios.get(
-      baseURL + encodeURIComponent(query)
-    );
+  baseURL + encodeURIComponent(query)
+);
 
-    if (!response.data) {
-      return res.status(400).json({
-        success: false,
-        message: "No data received.",
-      });
+if (!response.data) {
+  return res.status(400).json({
+    success: false,
+    message: "No data received.",
+  });
+}
+
+// Remove unwanted fields recursively
+const cleanObject = (obj) => {
+  if (!obj || typeof obj !== "object") return obj;
+
+  if (Array.isArray(obj)) {
+    return obj.map(cleanObject);
+  }
+
+  const blocked = new Set([
+    "credit",
+    "developer",
+    "query_time_ms",
+    "status",
+    "username",
+    "expiry",
+    "expiration",
+    "expires",
+    "uses_left",
+    "remaining",
+    "dailyRemaining",
+    "limit",
+    "requests_left",
+    "powered_by",
+    "api_info",
+    "used",
+    "created",
+  ]);
+
+  const cleaned = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    const lower = key.toLowerCase();
+
+    if (blocked.has(lower)) continue;
+
+    if (lower === "key_owner") {
+      cleaned[key] = "MoonWitch";
+      continue;
     }
 
-  //  user.credits -= 1;
-   // await user.save();
+    cleaned[key] = cleanObject(value);
+  }
 
-    res.json({
-      success: true,
-      credits: user.credits,
-      data: response.data,
-    });
+  return cleaned;
+};
+
+const cleanedData = cleanObject(response.data);
+
+// user.credits -= 1;
+// await user.save();
+
+res.json({
+  success: true,
+  credits: user.credits,
+  data: cleanedData,
+});
 
   } catch (err) {
     console.error(err);
