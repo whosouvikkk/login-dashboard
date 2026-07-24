@@ -3,7 +3,6 @@ const axios = require("axios");
 const User = require("../models/User");
 const connectDB = require("../config/db");
 const { protect } = require("../middleware/auth");
-const logs = require("../utils/logs");
 
 const router = express.Router();
 
@@ -117,14 +116,6 @@ const cleanedData = cleanObject(response.data);
 // user.credits -= 1;
 // await user.save();
 
-await logs.service(
-    req,
-    user,
-    `OSINT ${type}`,
-    query,
-    "SUCCESS"
-);
-    
 res.json({
   success: true,
   credits: user.credits,
@@ -132,19 +123,13 @@ res.json({
 });
 
   } catch (err) {
-
     console.error(err);
 
-    await logs.error(
-        "/osint/search",
-        err.message
-    );
-
     res.status(500).json({
-        success: false,
-        message: "Lookup failed.",
+      success: false,
+      message: "Lookup failed.",
     });
-}
+  }
 });
 
 module.exports = router;
